@@ -92,7 +92,7 @@ public class DishServiceImpl implements DishService {
         }
 
         for (Long id : ids) {
-            dishMapper.deleteById(ids);
+            dishMapper.deleteById(id);
             dishFlavorMapper.deleteByDishId(id);
         }
     }
