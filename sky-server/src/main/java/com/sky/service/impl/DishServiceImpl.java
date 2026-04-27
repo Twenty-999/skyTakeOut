@@ -75,6 +75,7 @@ public class DishServiceImpl implements DishService {
      * 批量删除菜品
      * @param ids
      */
+    @Transactional
     public void deleteBatch(List<Long> ids) {
         for (Long id : ids) {
             Dish dish = dishMapper.getById(id);
