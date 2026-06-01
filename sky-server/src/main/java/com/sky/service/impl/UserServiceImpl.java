@@ -8,6 +8,7 @@ import com.sky.entity.User;
 import com.sky.exception.LoginFailedException;
 import com.sky.mapper.UserMapper;
 import com.sky.properties.WeChatProperties;
+import com.sky.service.UserService;
 import com.sky.utils.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     // 微信服务接口地址
     public static final String WX_LOGIN_URL = "https://api.weixin.qq.com/sns/jscode2session";
