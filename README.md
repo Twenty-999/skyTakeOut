@@ -1,2 +1,2 @@
 # skyTakeOut
-This is a learning project from itheima.com.
+黑马程序员学习项目苍穹外卖
