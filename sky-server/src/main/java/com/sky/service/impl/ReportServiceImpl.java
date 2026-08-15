@@ -221,12 +221,12 @@ public class ReportServiceImpl implements ReportService {
 
         BusinessDataVO businessDataVO = workspaceService.getBusinessData(LocalDateTime.of(dateBegin, LocalTime.MIN), LocalDateTime.of(dateEnd, LocalTime.MAX));
 
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("template/运营数据报表模板");
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream("template/运营数据报表模板.xlsx");
 
         try {
             XSSFWorkbook excel = new XSSFWorkbook(in);
 
-            XSSFSheet sheet = excel.getSheetAt("sheet1");
+            XSSFSheet sheet = excel.getSheet("Sheet1");
 
             sheet.getRow(1).getCell(1).setCellValue("时间：" + dateBegin + "至" + dateEnd);
 
@@ -235,21 +235,21 @@ public class ReportServiceImpl implements ReportService {
             row.getCell(4).setCellValue(businessDataVO.getOrderCompletionRate());
             row.getCell(6).setCellValue(businessDataVO.getNewUsers());
 
-            XSSFRow row = sheet.getRow(4);
+            row = sheet.getRow(4);
             row.getCell(2).setCellValue(businessDataVO.getValidOrderCount());
             row.getCell(4).setCellValue(businessDataVO.getUnitPrice());
 
             for (int i = 0; i < 30; i++) {
                 LocalDate date = dateBegin.plusDays(i);
-                BusinessDataVO businessDataVO = workspaceService.getBusinessData(LocalDateTime.of(date, LocalTime.MIN), LocalDateTime.of(date, LocalTime.MAX));
+                BusinessDataVO businessData = workspaceService.getBusinessData(LocalDateTime.of(date, LocalTime.MIN), LocalDateTime.of(date, LocalTime.MAX));
 
                 row = sheet.getRow(7 + i);
                 row.getCell(1).setCellValue(date.toString());
-                row.getCell(2).setCellValue(businessDataVO.getTurnover());
-                row.getCell(3).setCellValue(businessDataVO.getValidOrderCount());
-                row.getCell(4).setCellValue(businessDataVO.getOrderCompletionRate());
-                row.getCell(5).setCellValue(businessDataVO.getUnitPrice());
-                row.getCell(6).setCellValue(businessDataVO.getNewUsers());
+                row.getCell(2).setCellValue(businessData.getTurnover());
+                row.getCell(3).setCellValue(businessData.getValidOrderCount());
+                row.getCell(4).setCellValue(businessData.getOrderCompletionRate());
+                row.getCell(5).setCellValue(businessData.getUnitPrice());
+                row.getCell(6).setCellValue(businessData.getNewUsers());
             }
 
             ServletOutputStream out = response.getOutputStream();
