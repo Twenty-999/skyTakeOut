@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 /**
@@ -24,7 +25,7 @@ import java.time.LocalDate;
 @RequestMapping("/admin/report")
 @Api(tags = "数据统计相关接口")
 @Slf4j
-public class report {
+public class ReportController {
 
     @Autowired
     private ReportService reportService;
@@ -85,5 +86,15 @@ public class report {
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
         log.info("销量排名前十，开始日期：{}，结束日期：{}", begin, end);
         return Result.success(reportService.getSalesTop10(begin, end));
+    }
+
+    /**
+     * 数据导出
+     * @param response
+     */
+    @GetMapping("/export")
+    @ApiOperation("数据导出")
+    public void export(HttpServletResponse response) {
+        reportService.exportBusinessData(response);
     }
 }
